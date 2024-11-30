@@ -84,7 +84,7 @@ API Endpoint
 
 Screenshots
 
-Insert snapshots of the dashboard, alerts, and ML-based prediction results here.
+
 Future Enhancements
 
     Add support for more sensors like temperature and humidity.
