@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Notification</title>
+</head>
+<body>
+    <h1>Send Notification</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Email</button>
+    </form>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome to Sensor Monitoring System</h1>
+    <p>Monitor vibration and water level data in real-time.</p>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'register' %}">Register</a>
+</body>
+</html> -->
+
+<!-- sensor/templates/sensor/landing_page.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome - Sensor Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .container {
+            display: inline-block;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        a {
+            display: block;
+            margin: 20px 0;
+            padding: 10px;
+            width: 200px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sensor Monitoring System</h1>
+        <p>Monitor vibration and water level data in real-time.</p>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+</body>
+</html>

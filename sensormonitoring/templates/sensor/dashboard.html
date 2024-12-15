@@ -1,0 +1,249 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ user.username }}</p>
+
+    <h2>Today's Sensor Data</h2>
+    <canvas id="sensorChart" width="400" height="200"></canvas>
+
+    <script>
+        const ctx = document.getElementById('sensorChart').getContext('2d');
+        const sensorChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ timestamps|safe }},
+                datasets: [
+                    {
+                        label: 'Water Level',
+                        data: {{ water_levels|safe }},
+                        borderColor: 'blue',
+                        fill: false,
+                    },
+                    {
+                        label: 'Vibration',
+                        data: {{ vibrations|safe }},
+                        borderColor: 'red',
+                        fill: false,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Sensor Values'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <p>
+        <a href="{% url 'notification_history' %}">View Notification History</a>
+        | <a href="{% url 'logout' %}">Logout</a>
+        | <a href="{% url 'home' %}">Home</a>
+    </p>
+</body>
+</html> -->
+
+
+<!-- sensor/templates/sensor/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Sensor Monitoring</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- JustGage and Raphael libraries -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/justgage@1.4.0/justgage.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 90%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 70%;
+            padding-left: 30px;  /* Padding for left alignment */
+        }
+        .danger-meter-container {
+            width: 300px;
+            height: 200px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .nav-links a {
+            margin: 0 10px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .nav-links a:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Left-aligned chart -->
+        <div class="chart-container">
+            <canvas id="sensorChart"></canvas>
+        </div>
+
+        <!-- Danger Meter positioned in top right corner -->
+        <div id="dangerMeter" class="danger-meter-container"></div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="{% url 'notification_history' %}">Notification History</a>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
+            {% if user.is_staff %}
+            <a href="{% url 'send_custom_mail' %}">Send Custom Email</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Sensor Monitoring System | All Rights Reserved</p>
+    </footer>
+
+    <!-- Chart.js Script -->
+    <script>
+        const ctx = document.getElementById('sensorChart').getContext('2d');
+        const sensorChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ timestamps|safe }},
+                datasets: [
+                    {
+                        label: 'Water Level',
+                        data: {{ water_levels|safe }},
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Vibration',
+                        data: {{ vibrations|safe }},
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Today\'s Sensor Readings'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Sensor Values'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- JustGage Script for Danger Meter -->
+    <script>
+        var dangerMeter = new JustGage({
+            id: "dangerMeter",  // ID of the container
+            value: {{ current_level|default:0 }},
+            min: 0,
+            max: 100,
+            title: "Danger Level",
+            label: " Danger Level",
+            gaugeWidthScale: 0.25,
+            counter: true,
+            levelColors: ["#00FF00", "#FFFF00", "#FF0000"],  // Green, Yellow, Red
+            startAnimationTime: 500,
+            startAnimationType: "easeInOutQuad",
+            pointerOptions: {
+                stem: {
+                    color: "#000"
+                }
+            },
+            gaugeColor: "#ccc"
+        });
+    </script>
+</body>
+</html>

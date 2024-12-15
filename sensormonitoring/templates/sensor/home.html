@@ -1,0 +1,222 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Sensor Monitoring</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .card p {
+            font-size: 18px;
+            color: #555;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- 
+    
+    <header>
+        <h1>Welcome to Sensor Monitoring</h1>
+        <p>Track sensor data and get notified in case of emergency situations</p>
+    </header>
+
+    
+    <div class="container">
+        <div class="card">
+            <h2>Dashboard</h2>
+            <p>View real-time sensor data and track the current sensor readings on your dashboard.</p>
+            <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
+        </div>
+
+        <div class="card">
+            <h2>Notification History</h2>
+            <p>Check all the past notifications sent to you and stay informed about critical alerts.</p>
+            <a href="{% url 'notification_history' %}" class="btn">View Notifications</a>
+        </div>
+
+        <div class="card">
+            <h2>Logout</h2>
+            <p>If you're done, click below to logout from your account.</p>
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
+        </div>
+    </div>
+
+    
+    <footer>
+        <p>&copy; 2024 Sensor Monitoring System | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html> --> 
+<!-- sensor/templates/sensor/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Sensor Monitoring</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .card p {
+            font-size: 18px;
+            color: #555;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p>Manage your sensor data and notifications.</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="card">
+            <h2>Dashboard</h2>
+            <p>View real-time sensor data and track the current sensor readings on your dashboard.</p>
+            <a href="{% url 'dashboard' %}" class="btn">Go to Dashboard</a>
+        </div>
+
+        <div class="card">
+            <h2>Notification History</h2>
+            <p>Check all the past notifications sent to you and stay informed about critical alerts.</p>
+            <a href="{% url 'notification_history' %}" class="btn">View Notifications</a>
+        </div>
+
+        {% if user.is_staff %}
+        <div class="card">
+            <h2>Send Custom Email</h2>
+            <p>As an admin, you can send custom notifications to all users.</p>
+            <a href="{% url 'send_custom_mail' %}" class="btn">Send Email</a>
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <h2>Logout</h2>
+            <p>If you're done, click below to logout from your account.</p>
+            <a href="{% url 'logout' %}" class="btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Sensor Monitoring System | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
+
